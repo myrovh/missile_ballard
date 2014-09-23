@@ -10,11 +10,12 @@
 #include "engine/Input_Manager.h"
 #include "engine/Texture_Manager.h"
 #include "engine/Mesh_Manager.h"
-#include "engine/Object.h"
 #include "engine/Renderer.h"
 #include "engine/Camera.h"
 #include "engine/Text.h"
 #include "engine/Button.h"
+#include "engine/Object.h"
+#include "object/Ship_Enemy.h"
 
 class Game
 {

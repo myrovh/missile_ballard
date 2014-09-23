@@ -58,11 +58,56 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 
 bool Game::initialise_content()
 {
-	camera = new Camera();
+	camera = new Camera(D3DXVECTOR3(0, 3, 3), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0),
+							  D3DX_PI / 2, 640 / (float)480, 0.1f, 200.0f);
 
-	//START Button creation and initialization
+	//START Texture Loading
 	texture_manage->load(renderer->get_device(), "texture/Button.png");
+	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Blue.png");
+	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Green.png");
+	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Red.png");
+	texture_manage->load(renderer->get_device(), "texture/LaserBlast.png");
+	texture_manage->load(renderer->get_device(), "texture/PlayerShipTexture.png");
+	texture_manage->load(renderer->get_device(), "texture/skybox.png");
+	//END Texture Loading
 
+	//START Mesh Loading
+	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Blue.x"))
+	{
+		return FALSE;
+	}
+	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Green.x"))
+	{
+		return FALSE;
+	}
+	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Red.x"))
+	{
+		return FALSE;
+	}
+	if(!mesh_manage->load(renderer->get_device(), "mesh/LaserBlast.x"))
+	{
+		return FALSE;
+	}
+	if(!mesh_manage->load(renderer->get_device(), "mesh/PlayerShip.x"))
+	{
+		return FALSE;
+	}
+	if(!mesh_manage->load(renderer->get_device(), "mesh/Skybox.x"))
+	{
+		return FALSE;
+	}
+	//END Mesh Loading
+
+	//START Object Creation
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 0.0f, 0.0f, 0.0f, 0.2f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(3.0f, 1.0f, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0)));
+	//END Object Creation
+
+	//START Button Creation
 	button_queue.push_back(new Button(this, texture_manage->get_texture("texture/Button.png"), 
 		renderer->get_font(), "test", 128, 64, D3DXVECTOR3(320, 240, 0), &Game::action));
 
@@ -73,7 +118,7 @@ bool Game::initialise_content()
 			return FALSE;
 		}
 	}
-	//END Button creation and initialization
+	//END Button Creation
 
 	// START Text box for mouse coordinates
 	RECT title_position;
