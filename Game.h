@@ -33,7 +33,7 @@ public:
 	Game();
 	~Game();
 
-	bool initialise(HWND window_handler, bool fullscreen, Input_Manager* input);
+	bool initialise(HWND window_handler, bool fullscreen, Input_Manager* input, Renderer* render);
 	bool initialise_content();
 	void update(float timestep);
 	void render();

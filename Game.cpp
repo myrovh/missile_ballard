@@ -15,12 +15,6 @@ Game::~Game()
 		object_queue[i]->release(mesh_manage);
 	}
 
-	if(renderer != NULL)
-	{
-		delete renderer;
-		renderer = NULL;
-	}
-
 	if(mesh_manage != NULL)
 	{
 		delete mesh_manage;
@@ -40,15 +34,10 @@ Game::~Game()
 	}
 }
 
-bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input)
+bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input, Renderer* renderer)
 {
 	input_manage = input;
-
-	renderer = new Renderer();
-	if(!renderer->initialise(window_handler, fullscreen))
-	{
-		return FALSE;
-	}
+	this->renderer = renderer;
 
 	texture_manage = new Texture_Manager();
 	mesh_manage = new Mesh_Manager(texture_manage);
