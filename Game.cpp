@@ -88,12 +88,12 @@ bool Game::initialise_content()
 	//END Mesh Loading
 
 	//START Object Creation
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 0.0f, 0.0f, 0.0f, 0.2f, 0.2f)));
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(3.0f, 1.0f, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0.2f)));
-	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 0.0f, 0.0f, 0.0f, 1.0f, 0)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0.2f, 0.2f)));
+	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(3.0f, 1.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage)));
+	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0)));
 	//END Object Creation
 
 	//START Button Creation
@@ -135,8 +135,8 @@ void Game::update(float timestamp)
 	std::stringstream font_output;
 	if(text_queue[0]->is_visible())
 	{
-		font_output << "X " << input_manage->get_mouse_x() << "\n"
-					<< "Y " << input_manage->get_mouse_y() << "\n";
+		font_output << "X " << input_manage->get_mouse_x_centered() << "\n"
+					<< "Y " << input_manage->get_mouse_y_centered() << "\n";
 		text_queue[0]->update(font_output.str());
 		font_output.str("");
 	}

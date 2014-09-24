@@ -16,6 +16,7 @@
 #include "engine/Button.h"
 #include "engine/Object.h"
 #include "object/Ship_Enemy.h"
+#include "object/Ship_Player.h"
 
 class Game
 {
