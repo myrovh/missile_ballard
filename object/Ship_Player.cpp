@@ -1,9 +1,10 @@
 #include "Ship_Player.h"
 
-Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation, float scale, Input_Manager* input_manage)
+Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation, float scale, Input_Manager* input_manage, Sound* engine_sound)
 		 : Object(model, position, rotation, scale)
 {
 	this->input_manage = input_manage;
+	this->engine_sound = engine_sound;
 }
 
 void Ship_Player::update(float timesetp)
@@ -26,14 +27,27 @@ void Ship_Player::update(float timesetp)
 	D3DXVec3TransformCoord(&forward, &forward, &rotation_y);
 	float temp = timesetp;
 
+	if(engine_sound)
+	{
+		engine_sound->stop();
+	}
+
 	//Add or subtract our new "forward" direction to our position
 	if(input_manage->get_key_down(VK_UP))
 	{
 		temp_vector += forward * TRANSLATE_SPEED * temp;
+		if(engine_sound)
+		{
+			engine_sound->play();
+		}
 	}
 	if(input_manage->get_key_down(VK_DOWN))
 	{
 		temp_vector -= forward * TRANSLATE_SPEED * temp;
+		if(engine_sound)
+		{
+			engine_sound->play();
+		}
 	}
 
 	vector_position = temp_vector;

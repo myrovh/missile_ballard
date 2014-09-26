@@ -10,11 +10,13 @@
 #include "engine/Input_Manager.h"
 #include "engine/Texture_Manager.h"
 #include "engine/Mesh_Manager.h"
+#include "engine/Sound_Manager.h"
 #include "engine/Renderer.h"
 #include "engine/Camera.h"
 #include "engine/Text.h"
 #include "engine/Button.h"
 #include "engine/Object.h"
+
 #include "object/Ship_Enemy.h"
 #include "object/Ship_Player.h"
 
@@ -25,6 +27,7 @@ private:
 	Input_Manager* input_manage;
 	Texture_Manager* texture_manage;
 	Mesh_Manager* mesh_manage;
+	Sound_Manager* sound_manage;
 	Camera* camera;
 	std::vector<Object*> object_queue;
 	std::vector<Text*> text_queue;

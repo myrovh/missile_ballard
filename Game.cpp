@@ -6,6 +6,7 @@ Game::Game()
 	texture_manage = NULL;
 	mesh_manage = NULL;
 	input_manage = NULL;
+	sound_manage = NULL;
 }
 
 Game::~Game()
@@ -27,6 +28,12 @@ Game::~Game()
 		texture_manage = NULL;
 	}
 
+	if(sound_manage != NULL)
+	{
+		delete sound_manage;
+		sound_manage = NULL;
+	}
+
 	if(input_manage != NULL)
 	{
 		delete input_manage;
@@ -39,6 +46,11 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 	input_manage = input;
 	this->renderer = renderer;
 
+	sound_manage = new Sound_Manager();
+	if(FAILED(sound_manage->initialise()))
+	{
+		return FALSE;
+	}
 	texture_manage = new Texture_Manager();
 	mesh_manage = new Mesh_Manager(texture_manage);
 
@@ -87,12 +99,16 @@ bool Game::initialise_content()
 	}
 	//END Mesh Loading
 
+	//START Sound Loading
+	sound_manage->load("sound/engine.wav");
+	//END Sound Loading
+
 	//START Object Creation
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0.2f, 0.2f)));
-	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage)));
+	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage, sound_manage->get_sound("sound/engine.wav"))));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0)));
 	//END Object Creation
 
