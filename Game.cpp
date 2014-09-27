@@ -11,6 +11,11 @@ Game::Game()
 
 Game::~Game()
 {
+	for(unsigned int i = 0; i < particle_queue.size(); i++)
+	{
+		particle_queue[i]->release(texture_manage);
+	}
+
 	for(unsigned int i = 0; i < object_queue.size(); i++)
 	{
 		object_queue[i]->release(mesh_manage);
@@ -70,6 +75,7 @@ bool Game::initialise_content()
 	texture_manage->load(renderer->get_device(), "texture/LaserBlast.png");
 	texture_manage->load(renderer->get_device(), "texture/PlayerShipTexture.png");
 	texture_manage->load(renderer->get_device(), "texture/skybox.png");
+	texture_manage->load(renderer->get_device(), "texture/point_particle.bmp");
 	//END Texture Loading
 
 	//START Mesh Loading
@@ -111,6 +117,23 @@ bool Game::initialise_content()
 	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage, sound_manage->get_sound("sound/engine.wav"))));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0)));
 	//END Object Creation
+
+	//START Particle Spawner Creation
+	particle_queue.push_back(new Particle_Spawner);
+	particle_queue[0]->set_position(D3DXVECTOR3(0.0f, 10.0f, 0));
+	particle_queue[0]->set_particle_texture(texture_manage->get_texture("texture/point_particle.bmp"));
+	particle_queue[0]->set_max_particles(1000);
+	particle_queue[0]->set_number_to_release(5);
+	particle_queue[0]->set_release_interval(0.05f);
+	particle_queue[0]->set_lifetime(5.0f);
+	particle_queue[0]->set_size(0.3f);
+	particle_queue[0]->set_particle_colour(D3DXCOLOR(0.2f, 0.2f, 1.0f, 1.0f));
+	particle_queue[0]->set_velocity(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	particle_queue[0]->set_gravity(D3DXVECTOR3(0.0f, -3.0f, 0.0f));
+	//particle_queue[0]->set_wind(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	particle_queue[0]->set_velocity_variance(10.0f);
+	particle_queue[0]->initialise(renderer->get_device());
+	//END Particle Spawner Creation
 
 	//START Button Creation
 	button_queue.push_back(new Button(this, texture_manage->get_texture("texture/Button.png"), 
@@ -169,6 +192,12 @@ void Game::update(float timestamp)
 		object_queue[i]->update(timestamp);
 	}
 
+	//Update particle spawners
+	for(size_t i = 0; i < particle_queue.size(); i++)
+	{
+		particle_queue[i]->update(timestamp);
+	}
+
 	//Update buttons
 	for(size_t i = 0; i < button_queue.size(); i++)
 	{
@@ -181,7 +210,7 @@ void Game::update(float timestamp)
 
 void Game::render()
 {
-	renderer->render(object_queue, button_queue, text_queue, camera);
+	renderer->render(object_queue, particle_queue, button_queue, text_queue, camera);
 }
 
 void Game::trace(const char * fmt, ...)

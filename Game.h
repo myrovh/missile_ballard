@@ -16,6 +16,7 @@
 #include "engine/Text.h"
 #include "engine/Button.h"
 #include "engine/Object.h"
+#include "engine/Particle_Spawner.h"
 
 #include "object/Ship_Enemy.h"
 #include "object/Ship_Player.h"
@@ -32,6 +33,7 @@ private:
 	std::vector<Object*> object_queue;
 	std::vector<Text*> text_queue;
 	std::vector<Button*> button_queue;
+	std::vector<Particle_Spawner*> particle_queue;
 
 public:
 	Game();
