@@ -1,0 +1,7 @@
+Player Controls
+---------------
+Use arrow keys to move the ship
+
+Known Bugs
+---------------
+Particle Spawners will stop emitting if the player moves
