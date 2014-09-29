@@ -17,9 +17,18 @@
 #include "engine/Button.h"
 #include "engine/Object.h"
 #include "engine/Particle_Spawner.h"
+#include "engine/State_Machine.h"
 
 #include "object/Ship_Enemy.h"
 #include "object/Ship_Player.h"
+
+enum Game_State
+{
+	EMPTY,
+	MENU,
+	GAME,
+	GAME_OVER
+};
 
 class Game
 {
@@ -30,6 +39,7 @@ private:
 	Mesh_Manager* mesh_manage;
 	Sound_Manager* sound_manage;
 	Camera* camera;
+	State_Machine<Game_State, Game>* state_machine;
 	std::vector<Object*> object_queue;
 	std::vector<Text*> text_queue;
 	std::vector<Button*> button_queue;
@@ -43,8 +53,27 @@ public:
 	bool initialise_content();
 	void update(float timestep);
 	void render();
+
+	//Menu State Functions
+	void menu_enter();
+	void menu_update(float timestep);
+	void menu_render();
+	void menu_exit();
+
+	//Game State Functions
+	void game_enter();
+	void game_update(float timestep);
+	void game_render();
+	void game_exit();
+
+	//Game Over State Functions
+	void gameover_enter();
+	void gameover_update(float timestep);
+	void gameover_render();
+	void gameover_exit();
+
 	void trace(const char * fmt, ...);
-	void action(int value);
+	void cycle_state(int value);
 };
 
 #endif

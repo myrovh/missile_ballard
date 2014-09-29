@@ -7,6 +7,7 @@ Game::Game()
 	mesh_manage = NULL;
 	input_manage = NULL;
 	sound_manage = NULL;
+	state_machine = NULL;
 }
 
 Game::~Game()
@@ -44,13 +45,42 @@ Game::~Game()
 		delete input_manage;
 		input_manage = NULL;
 	}
+
+	if(state_machine)
+	{
+		delete state_machine;
+		state_machine = NULL;
+	}
 }
 
+//! Create Manager classes
+/*!
+	Order of Instantiation is:
+	State_Machine
+	Input_Manager
+	Renderer
+	Sound_Manager
+	Texture_Manager
+	Mesh_Manager
+	Game Assets Loaded
+	Set State to default state
+*/
 bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input, Renderer* renderer)
 {
+	//Create state machine
+	state_machine = new State_Machine<Game_State, Game>(this, EMPTY);
+	state_machine->register_state(MENU, &Game::menu_enter, &Game::menu_update,
+								  &Game::menu_render, &Game::menu_exit);
+	state_machine->register_state(GAME, &Game::game_enter, &Game::game_update,
+								  &Game::game_render, &Game::game_exit);
+	state_machine->register_state(GAME_OVER, &Game::gameover_enter, &Game::gameover_update,
+								  &Game::gameover_render, &Game::gameover_exit);
+
+	//Insert input_manager and renderer
 	input_manage = input;
 	this->renderer = renderer;
 
+	//Create Sound manager
 	sound_manage = new Sound_Manager();
 	if(FAILED(sound_manage->initialise()))
 	{
@@ -58,6 +88,13 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 	}
 	texture_manage = new Texture_Manager();
 	mesh_manage = new Mesh_Manager(texture_manage);
+
+	if(!initialise_content())
+	{
+		return FALSE;
+	}
+
+	state_machine->change_state(MENU);
 
 	return TRUE;
 }
@@ -137,7 +174,7 @@ bool Game::initialise_content()
 
 	//START Button Creation
 	button_queue.push_back(new Button(this, texture_manage->get_texture("texture/Button.png"), 
-		renderer->get_font(), "test", 128, 64, D3DXVECTOR3(320, 240, 0), &Game::action));
+		renderer->get_font(), "Start Game", 128, 64, D3DXVECTOR3(renderer->get_width() / 2, renderer->get_height() / 2, 0), &Game::cycle_state));
 
 	for(size_t i = 0; i < button_queue.size(); i++)
 	{
@@ -155,20 +192,80 @@ bool Game::initialise_content()
 	title_position.left = 0;
 	title_position.right = 80;
 	text_queue.push_back(new Text(title_position, DT_LEFT | DT_NOCLIP | DT_VCENTER,
-		D3DCOLOR_ARGB(255, 255, 255, 255), TRUE));
+		D3DCOLOR_ARGB(255, 255, 255, 255)));
 	// END Text box for mouse coordinates
 
 	return TRUE;
 }
 
-void Game::action(int value)
-{
-	trace("Hi!");
-}
-
 void Game::update(float timestamp)
 {
 	input_manage->begin_update();
+
+	state_machine->update(timestamp);
+
+
+	input_manage->end_update();
+}
+
+void Game::render()
+{
+	renderer->render(object_queue, particle_queue, button_queue, text_queue, camera);
+}
+
+void Game::menu_enter()
+{
+	button_queue[0]->set_visible();
+}
+
+void Game::menu_update(float timestep)
+{
+	//Action on Esc pressed
+	if(input_manage->get_key_up(VK_ESCAPE))
+	{
+		PostQuitMessage(0);
+	}
+
+	//Update buttons
+	for(size_t i = 0; i < button_queue.size(); i++)
+	{
+		button_queue[i]->update(input_manage->get_mouse_x(), input_manage->get_mouse_y(),
+								input_manage->get_mouse_up(LEFT_MOUSE));
+	}
+}
+
+void Game::menu_render()
+{
+
+}
+
+void Game::menu_exit()
+{
+	button_queue[0]->set_invisible();
+}
+
+void Game::game_enter()
+{
+	//Make objects visible
+	for(size_t i = 0; i < object_queue.size(); i++)
+	{
+		object_queue[i]->set_visible();
+	}
+
+	//Make particle spawners visible
+	for(size_t i = 0; i < particle_queue.size(); i++)
+	{
+		particle_queue[i]->set_visible();
+	}
+}
+
+void Game::game_update(float timestep)
+{
+	//Action on Esc pressed
+	if(input_manage->get_key_up(VK_ESCAPE))
+	{
+		state_machine->change_state(MENU);
+	}
 
 	//Update text[0]
 	std::stringstream font_output;
@@ -180,37 +277,63 @@ void Game::update(float timestamp)
 		font_output.str("");
 	}
 
-	//Action on Esc pressed
-	if(input_manage->get_key_down(VK_ESCAPE))
-	{
-		PostQuitMessage(0);
-	}
-
 	//Update objects
 	for(size_t i = 0; i < object_queue.size(); i++)
 	{
-		object_queue[i]->update(timestamp);
+		object_queue[i]->update(timestep);
 	}
 
 	//Update particle spawners
 	for(size_t i = 0; i < particle_queue.size(); i++)
 	{
-		particle_queue[i]->update(timestamp);
+		particle_queue[i]->update(timestep);
 	}
-
-	//Update buttons
-	for(size_t i = 0; i < button_queue.size(); i++)
-	{
-		button_queue[i]->update(input_manage->get_mouse_x(), input_manage->get_mouse_y(),
-								input_manage->get_mouse_up(LEFT_MOUSE));
-	}
-
-	input_manage->end_update();
 }
 
-void Game::render()
+void Game::game_render()
 {
-	renderer->render(object_queue, particle_queue, button_queue, text_queue, camera);
+
+}
+
+void Game::game_exit()
+{
+	//Make objects invisible
+	for(size_t i = 0; i < object_queue.size(); i++)
+	{
+		object_queue[i]->set_invisible();
+	}
+
+	//Make particle spawners invisible
+	for(size_t i = 0; i < particle_queue.size(); i++)
+	{
+		particle_queue[i]->set_invisible();
+	}
+}
+
+void Game::gameover_enter()
+{
+
+}
+
+void Game::gameover_update(float timestep)
+{
+
+}
+
+void Game::gameover_render()
+{
+
+}
+
+void Game::gameover_exit()
+{
+
+}
+
+void Game::cycle_state(int value)
+{
+	trace("State Change");
+	state_machine->change_state(GAME);
 }
 
 void Game::trace(const char * fmt, ...)
