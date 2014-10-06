@@ -101,8 +101,6 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 
 bool Game::initialise_content()
 {
-	camera = new Camera(D3DXVECTOR3(0, 3, 3), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 1, 0),
-							  D3DX_PI / 2, 640 / (float)480, 0.1f, 200.0f);
 
 	//START Texture Loading
 	texture_manage->load(renderer->get_device(), "texture/Button.png");
@@ -151,9 +149,14 @@ bool Game::initialise_content()
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0.2f)));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 0.2f, 0.2f)));
-	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage, sound_manage->get_sound("sound/engine.wav"))));
+	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0), D3DXVECTOR3(1.0f, 1.0f, 180.0f), 1.0f, input_manage, sound_manage->get_sound("sound/engine.wav"))));
 	object_queue.push_back((new Ship_Enemy(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 0)));
 	//END Object Creation
+
+	//START Camera Creation
+	camera = new Camera_Third(D3DXVECTOR3(0, 3, 3), object_queue[5], D3DXVECTOR3(0, 1, 0),
+							  D3DX_PI / 2, 640 / (float)480, 0.1f, 200.0f);
+	//END Camera Creation
 
 	//START Particle Spawner Creation
 	particle_queue.push_back(new Particle_Spawner);
@@ -246,6 +249,9 @@ void Game::menu_exit()
 
 void Game::game_enter()
 {
+	//Make mouse coord display visible
+	text_queue[0]->set_visible();
+
 	//Make objects visible
 	for(size_t i = 0; i < object_queue.size(); i++)
 	{

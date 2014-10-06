@@ -13,6 +13,7 @@
 #include "engine/Sound_Manager.h"
 #include "engine/Renderer.h"
 #include "engine/Camera.h"
+#include "engine/Camera_Third.h"
 #include "engine/Text.h"
 #include "engine/Button.h"
 #include "engine/Object.h"
