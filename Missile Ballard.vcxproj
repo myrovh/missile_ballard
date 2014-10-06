@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ED06F276-E864-4C9F-A976-3C2A438ECC57}</ProjectGuid>
+    <RootNamespace>MissileBallard</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\Button.h" />
+    <ClInclude Include="engine\Camera.h" />
+    <ClInclude Include="engine\Camera_Third.h" />
+    <ClInclude Include="engine\Input_Manager.h" />
+    <ClInclude Include="engine\Mesh.h" />
+    <ClInclude Include="engine\Mesh_Manager.h" />
+    <ClInclude Include="engine\Object.h" />
+    <ClInclude Include="engine\Particle_Spawner.h" />
+    <ClInclude Include="engine\Renderer.h" />
+    <ClInclude Include="engine\Sound.h" />
+    <ClInclude Include="engine\Sound_Manager.h" />
+    <ClInclude Include="engine\Text.h" />
+    <ClInclude Include="engine\Texture.h" />
+    <ClInclude Include="engine\Texture_Manager.h" />
+    <ClInclude Include="engine\Util.h" />
+    <ClInclude Include="engine\WaveFile.h" />
+    <ClInclude Include="engine\Window.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="object\Ship_Enemy.h" />
+    <ClInclude Include="object\Ship_Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="engine\Button.cpp" />
+    <ClCompile Include="engine\Camera.cpp" />
+    <ClCompile Include="engine\Camera_Third.cpp" />
+    <ClCompile Include="engine\Input_Manager.cpp" />
+    <ClCompile Include="engine\Main.cpp" />
+    <ClCompile Include="engine\Mesh.cpp" />
+    <ClCompile Include="engine\Mesh_Manager.cpp" />
+    <ClCompile Include="engine\Object.cpp" />
+    <ClCompile Include="engine\Particle_Spawner.cpp" />
+    <ClCompile Include="engine\Renderer.cpp" />
+    <ClCompile Include="engine\Sound.cpp" />
+    <ClCompile Include="engine\Sound_Manager.cpp" />
+    <ClCompile Include="engine\State_Machine.h" />
+    <ClCompile Include="engine\Text.cpp" />
+    <ClCompile Include="engine\Texture.cpp" />
+    <ClCompile Include="engine\Texture_Manager.cpp" />
+    <ClCompile Include="engine\WaveFile.cpp" />
+    <ClCompile Include="engine\Window.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="object\Ship_Enemy.cpp" />
+    <ClCompile Include="object\Ship_Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="texture\Button.png" />
+    <Image Include="texture\EnemyShipTexture-Blue.png" />
+    <Image Include="texture\EnemyShipTexture-Green.png" />
+    <Image Include="texture\EnemyShipTexture-Red.png" />
+    <Image Include="texture\LaserBlast.png" />
+    <Image Include="texture\PlayerShipTexture.png" />
+    <Image Include="texture\point_particle.bmp" />
+    <Image Include="texture\skybox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="mesh\EnemyShip-Blue.x" />
+    <None Include="mesh\EnemyShip-Green.x" />
+    <None Include="mesh\EnemyShip-Red.x" />
+    <None Include="mesh\LaserBlast.x" />
+    <None Include="mesh\PlayerShip.x" />
+    <None Include="mesh\Skybox.x" />
+    <None Include="README" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound\engine.wav" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

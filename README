@@ -4,4 +4,4 @@ Use arrow keys to move the ship
 
 Known Bugs
 ---------------
-Particle Spawners will stop emitting if the player moves
+Particle Spawners seem to stop emitting after spawning a certain number of particles
