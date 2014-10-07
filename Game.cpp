@@ -154,7 +154,7 @@ bool Game::initialise_content()
 	//END Object Creation
 
 	//START Camera Creation
-	camera = new Camera_Third(D3DXVECTOR3(0, 3, 3), object_queue[5], D3DXVECTOR3(0, 1, 0),
+	camera = new Camera_Third(D3DXVECTOR3(0, 0, 10), object_queue[4], D3DXVECTOR3(0, 1, 0),
 							  D3DX_PI / 2, 640 / (float)480, 0.1f, 200.0f);
 	//END Camera Creation
 

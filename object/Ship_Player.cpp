@@ -5,7 +5,7 @@ Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
-	axis_rotation = 1.0f;
+	axis_rotation = 0.01f;
 }
 
 void Ship_Player::update(float timestep)
@@ -27,19 +27,30 @@ void Ship_Player::update(float timestep)
 	mouse_vector.x = input_manage->get_mouse_x_centered();
 	mouse_vector.y = input_manage->get_mouse_y_centered();
 	mouse_vector.z = 40.0f;
-	D3DXQUATERNION mouse_point;
-	D3DXQUATERNION new_rotation;
-	D3DXQuaternionRotationAxis(&mouse_point, &mouse_vector, axis_rotation);
-	D3DXQuaternionNormalize(&mouse_point, &mouse_point);
-	D3DXQuaternionNormalize(&new_rotation, &new_rotation);
-	D3DXQuaternionSlerp(&new_rotation, &rotation, &mouse_point, 0.05f);
-	//rotation *= mouse_point;
-	rotation = new_rotation;
+
+	if(mouse_vector.x > DEAD_ZONE || mouse_vector.x < -DEAD_ZONE)
+	{
+		if(mouse_vector.y > DEAD_ZONE || mouse_vector.y < -DEAD_ZONE)
+		{
+			D3DXQUATERNION mouse_point;
+			D3DXQUATERNION new_rotation;
+			D3DXQuaternionRotationAxis(&mouse_point, &mouse_vector, axis_rotation);
+			D3DXQuaternionNormalize(&mouse_point, &mouse_point);
+			D3DXQuaternionNormalize(&rotation, &rotation);
+			mouse_point = mouse_point * rotation;
+			D3DXQuaternionSlerp(&new_rotation, &rotation, &mouse_point, 1.0f);
+			rotation = new_rotation;
+		}
+	}
 
 	D3DXVECTOR3 temp_vector = vector_position;
-	//D3DXVECTOR3 forward(0, 0, 1);
 	D3DXVECTOR3 forward;
-	D3DXQuaternionToAxisAngle(&rotation, &forward, nullptr);
+	D3DXMATRIX rotation_matrix;
+
+	D3DXMatrixRotationQuaternion(&rotation_matrix, &rotation);
+	D3DXVec3TransformCoord(&forward, &forward, &rotation_matrix);
+
+	//D3DXQuaternionToAxisAngle(&rotation, &forward, nullptr);
 	D3DXVec3Normalize(&forward, &forward);
 	//Use the y rotation value to modify the concept of "forward"
 	//D3DXMATRIX rotation_y;
