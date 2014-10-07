@@ -8,5 +8,8 @@ Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation, 
 
 void Ship_Enemy::update(float timesetp)
 {
-	rotation.y += spin_speed * timesetp;
+	D3DXQUATERNION rotation_test;
+	D3DXQuaternionRotationYawPitchRoll(&rotation_test, timesetp * spin_speed, 0.0f, 0.0f);
+	D3DXQuaternionNormalize(&rotation_test, &rotation_test);
+	rotation *= rotation_test;
 }
