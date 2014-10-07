@@ -5,27 +5,50 @@ Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
+	axis_rotation = 1.0f;
 }
 
-void Ship_Player::update(float timesetp)
+void Ship_Player::update(float timestep)
 {
+	/*
 	//Left for Right response
 	if(input_manage->get_key_down(VK_LEFT))
 	{
-		rotation.y -= ROTATION_SPEED * timesetp;
+		rotation.y -= ROTATION_SPEED * timestep;
 	}
 	if(input_manage->get_key_down(VK_RIGHT))
 	{
-		rotation.y += ROTATION_SPEED * timesetp;
+		rotation.y += ROTATION_SPEED * timestep;
 	}
+	*/
 
-	//Use the y rotation value to modify the concept of "forward"
+	//Create a new rotation based on mouse location
+	D3DXVECTOR3 mouse_vector;
+	mouse_vector.x = input_manage->get_mouse_x_centered();
+	mouse_vector.y = input_manage->get_mouse_y_centered();
+	mouse_vector.z = 40.0f;
+	D3DXQUATERNION mouse_point;
+	D3DXQUATERNION new_rotation;
+	D3DXQuaternionRotationAxis(&mouse_point, &mouse_vector, axis_rotation);
+	D3DXQuaternionNormalize(&mouse_point, &mouse_point);
+	D3DXQuaternionNormalize(&new_rotation, &new_rotation);
+	D3DXQuaternionSlerp(&new_rotation, &rotation, &mouse_point, 0.05f);
+	//rotation *= mouse_point;
+	rotation = new_rotation;
+
 	D3DXVECTOR3 temp_vector = vector_position;
-	D3DXVECTOR3 forward(0, 0, 1);
-	D3DXMATRIX rotation_y;
-	D3DXMatrixRotationY(&rotation_y, rotation.y);
-	D3DXVec3TransformCoord(&forward, &forward, &rotation_y);
-	float temp = timesetp;
+	//D3DXVECTOR3 forward(0, 0, 1);
+	D3DXVECTOR3 forward;
+	D3DXQuaternionToAxisAngle(&rotation, &forward, nullptr);
+	D3DXVec3Normalize(&forward, &forward);
+	//Use the y rotation value to modify the concept of "forward"
+	//D3DXMATRIX rotation_y;
+	//D3DXMatrixRotationY(&rotation_y, rotation.y);
+	//D3DXVec3TransformCoord(&forward, &forward, &rotation_y);
+	//D3DXMATRIX rotation_matrix;
+	//D3DXMatrixRotationQuaternion(&rotation_matrix, &new_rotation);
+	//D3DXVec3TransformCoord(&forward, &forward, &rotation_matrix);
+
 
 	if(engine_sound)
 	{
@@ -35,7 +58,7 @@ void Ship_Player::update(float timesetp)
 	//Add or subtract our new "forward" direction to our position
 	if(input_manage->get_key_down(VK_UP))
 	{
-		temp_vector += forward * TRANSLATE_SPEED * temp;
+		temp_vector += forward * TRANSLATE_SPEED * timestep;
 		if(engine_sound)
 		{
 			engine_sound->play();
@@ -43,7 +66,7 @@ void Ship_Player::update(float timesetp)
 	}
 	if(input_manage->get_key_down(VK_DOWN))
 	{
-		temp_vector -= forward * TRANSLATE_SPEED * temp;
+		temp_vector -= forward * TRANSLATE_SPEED * timestep;
 		if(engine_sound)
 		{
 			engine_sound->play();
