@@ -1,7 +1,7 @@
 #include "Ship_Enemy.h"
 
-Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation, float scale, float speed)
-		 : Object(model, position, rotation, scale)
+Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed)
+		 : Object(model, position, scale)
 {
 	spin_speed = speed;
 }

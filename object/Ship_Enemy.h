@@ -8,8 +8,7 @@ private:
 	float spin_speed;
 
 public:
-	Ship_Enemy(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation,
-		float scale, float speed);
+	Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed);
 
 	void update(float timestep);
 };
