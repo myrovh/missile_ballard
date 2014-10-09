@@ -6,7 +6,7 @@
 
 #define ROTATION_SPEED  3.0f
 #define TRANSLATE_SPEED  20.0f
-#define DEAD_ZONE 50
+#define DEAD_ZONE 15
 
 class Ship_Player : public Object
 {
@@ -15,8 +15,8 @@ private:
 	Sound* engine_sound;
 
 public:
-	Ship_Player(Mesh* model, D3DXVECTOR3 position, D3DXVECTOR3 rotation,
-		float scale, Input_Manager* input_manage, Sound* engine_sound);
+	Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, 
+				Input_Manager* input_manage, Sound* engine_sound);
 
 	void update(float timestep);
 };
