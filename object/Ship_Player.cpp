@@ -45,23 +45,12 @@ void Ship_Player::update(float timestep)
 		}
 	}
 
-	D3DXVECTOR3 temp_vector = vector_position;
-	D3DXVECTOR3 forward;
-	D3DXMATRIX rotation_matrix;
-
-	//D3DXMatrixRotationQuaternion(&rotation_matrix, &rotation);
-	//D3DXVec3TransformCoord(&forward, &forward, &rotation_matrix);
-	D3DXQuaternionToAxisAngle(&rotation, &forward, nullptr);
-
-	//D3DXQuaternionToAxisAngle(&rotation, &forward, nullptr);
-	D3DXVec3Normalize(&forward, &forward);
-	//Use the y rotation value to modify the concept of "forward"
-	//D3DXMATRIX rotation_y;
-	//D3DXMatrixRotationY(&rotation_y, rotation.y);
-	//D3DXVec3TransformCoord(&forward, &forward, &rotation_y);
-	//D3DXMATRIX rotation_matrix;
-	//D3DXMatrixRotationQuaternion(&rotation_matrix, &new_rotation);
-	//D3DXVec3TransformCoord(&forward, &forward, &rotation_matrix);
+	//Calculate which way is forward
+	D3DXVECTOR3 forward = {0, 0, 1.0f};
+	D3DXMATRIX transform_forward;
+	D3DXMatrixRotationQuaternion(&transform_forward, &rotation);
+	D3DXVec3TransformCoord(&forward, &forward, &transform_forward);
+	forward = -forward;
 
 
 	//Stop sound if buttons are not being pressed
@@ -70,6 +59,7 @@ void Ship_Player::update(float timestep)
 		engine_sound->stop();
 	}
 
+	D3DXVECTOR3 temp_vector = vector_position;
 	//Add or subtract our new "forward" direction to our position
 	if(input_manage->get_key_down('W'))
 	{
