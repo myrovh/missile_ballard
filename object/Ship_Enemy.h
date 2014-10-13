@@ -5,10 +5,12 @@
 class Ship_Enemy : public Object
 {
 private:
-	float spin_speed;
+	float move_speed;
+	Object* target;
 
 public:
-	Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed);
+	Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object* target);
+	Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale);
 
 	void update(float timestep);
 };

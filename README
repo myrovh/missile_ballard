@@ -6,6 +6,7 @@ Known Bugs
 ---------------
 - Particle Spawners seem to stop emitting after spawning a certain number of particles
 - Mouse look is currently broken so navigation is very difficult
+- Enemy Follow is broken
 
 Changelog
 ---------------
