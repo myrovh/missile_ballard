@@ -101,6 +101,7 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 
 bool Game::initialise_content()
 {
+	frame_count = 0;
 
 	//START Texture Loading
 	texture_manage->load(renderer->get_device(), "texture/Button.png");
@@ -294,6 +295,16 @@ void Game::game_update(float timestep)
 	{
 		particle_queue[i]->update(timestep);
 	}
+
+	//Check for collision
+	if(Collision::check_collision(object_queue[0]->get_hit_box(), object_queue[3]->get_hit_box()))
+	{
+		std::stringstream trace_output;
+		trace_output << "object hit at frame " << frame_count << "\n";
+		trace(trace_output.str().c_str());
+	}
+
+	frame_count++;
 }
 
 void Game::game_render()

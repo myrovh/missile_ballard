@@ -3,8 +3,9 @@
 Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object*	target)
 		 : Object(model, position, scale)
 {
-	move_speed = speed;
+	this->move_speed = speed;
 	this->target = target;
+	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 }
 
 Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale)
@@ -46,5 +47,11 @@ void Ship_Enemy::update(float timestep)
 		vector_position -= movement * timestep;
 
 		//vector_position += target_increment * timestep;
+	}
+
+	//Update location of hit_box
+	if(hit_box != NULL)
+	{
+		hit_box->update_position(this->get_object_location());
 	}
 }

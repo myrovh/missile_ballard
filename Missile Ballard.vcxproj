@@ -71,6 +71,8 @@
     <ClInclude Include="engine\Button.h" />
     <ClInclude Include="engine\Camera.h" />
     <ClInclude Include="engine\Camera_Third.h" />
+    <ClInclude Include="engine\Collision.h" />
+    <ClInclude Include="engine\Collision_Sphere.h" />
     <ClInclude Include="engine\Input_Manager.h" />
     <ClInclude Include="engine\Mesh.h" />
     <ClInclude Include="engine\Mesh_Manager.h" />
@@ -93,6 +95,8 @@
     <ClCompile Include="engine\Button.cpp" />
     <ClCompile Include="engine\Camera.cpp" />
     <ClCompile Include="engine\Camera_Third.cpp" />
+    <ClCompile Include="engine\Collision.cpp" />
+    <ClCompile Include="engine\Collision_Sphere.cpp" />
     <ClCompile Include="engine\Input_Manager.cpp" />
     <ClCompile Include="engine\Main.cpp" />
     <ClCompile Include="engine\Mesh.cpp" />

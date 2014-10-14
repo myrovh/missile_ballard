@@ -3,6 +3,7 @@
 #include "../engine/Object.h"
 #include "../engine/Input_Manager.h"
 #include "../engine/Sound.h"
+#include "../engine/Collision_Sphere.h"
 
 #define ROTATION_SPEED  3.0f
 #define TRANSLATE_SPEED  20.0f

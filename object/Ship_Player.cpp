@@ -6,6 +6,7 @@ Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_M
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
 	axis_rotation = cos(0/2);
+	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 }
 
 void Ship_Player::update(float timestep)
@@ -96,4 +97,7 @@ void Ship_Player::update(float timestep)
 	}
 
 	vector_position = temp_vector;
+
+	//Update location of hit_box
+	hit_box->update_position(this->get_object_location());
 }

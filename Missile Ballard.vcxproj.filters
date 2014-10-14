@@ -90,6 +90,12 @@
     <ClInclude Include="engine\Camera_Third.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
+    <ClInclude Include="engine\Collision.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Collision_Sphere.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\Window.cpp">
@@ -153,6 +159,12 @@
       <Filter>Header Files\engine</Filter>
     </ClCompile>
     <ClCompile Include="engine\Camera_Third.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Collision.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Collision_Sphere.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>

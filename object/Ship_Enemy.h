@@ -1,6 +1,7 @@
 #ifndef SHIP_ENEMY_H
 #define SHIP_ENEMY_H
 #include "../engine/Object.h"
+#include "../engine/Collision_Sphere.h"
 
 class Ship_Enemy : public Object
 {

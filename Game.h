@@ -45,6 +45,7 @@ private:
 	std::vector<Text*> text_queue;
 	std::vector<Button*> button_queue;
 	std::vector<Particle_Spawner*> particle_queue;
+	unsigned long long frame_count;
 
 public:
 	Game();
