@@ -5,8 +5,7 @@ Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_M
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
-	axis_rotation = D3DX_PI / 180;
-	//axis_rotation = cos(0 / 2);
+	axis_rotation = cos(0 / 2);
 	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 }
 
@@ -23,21 +22,11 @@ void Ship_Player::update(float timestep)
 	D3DXVec3TransformCoord(&forward, &forward, &transform_forward);
 	forward = -forward;
 
-	//if not in dead_zone
-	/*
-	if(!((mouse_x_location >= -DEAD_ZONE && mouse_x_location <= 0) && (mouse_y_location >= -DEAD_ZONE && mouse_y_location <= 0)) && //4th quadrant exclusion zone
-	   !((mouse_x_location <= DEAD_ZONE && mouse_x_location >= 0) && (mouse_y_location <= DEAD_ZONE && mouse_y_location >= 0)) && //1st quadrant exclusion zone
-	   !((mouse_x_location <= DEAD_ZONE && mouse_x_location >= 0) && (mouse_y_location >= -DEAD_ZONE && mouse_y_location <= 0)) && //3rd quadrant exclusion zone
-	   !((mouse_x_location >= -DEAD_ZONE && mouse_x_location <= 0) && (mouse_y_location <= DEAD_ZONE && mouse_y_location >= 0)))//2nd quadrant exclusion zone
-	{
-	}
-	*/
 	//Rotate ship on x and y axis based on mouse location
 	float x_rotation_angle = mouse_x_location * timestep;
 	float y_rotation_angle = mouse_y_location * timestep;
 	D3DXMATRIX x_rotation;
 	D3DXMATRIX y_rotation;
-	D3DXVECTOR3 new_forward;
 	D3DXQUATERNION new_rotation;
 
 	D3DXMatrixRotationY(&x_rotation, x_rotation_angle);
@@ -45,7 +34,6 @@ void Ship_Player::update(float timestep)
 	D3DXMATRIX matrix_rotation = x_rotation * y_rotation;
 	//D3DXQuaternionRotationAxis(&new_rotation, &new_forward, 0);
 	D3DXQuaternionRotationMatrix(&new_rotation, &matrix_rotation);
-
 	rotation = new_rotation;
 
 	//Stop sound if buttons are not being pressed
@@ -54,7 +42,7 @@ void Ship_Player::update(float timestep)
 		engine_sound->stop();
 	}
 
-	//Add or subtract our new "forward" direction to our position
+	//Add or subtract new "forward" direction to our position
 	D3DXVECTOR3 temp_vector = vector_position;
 	if(input_manage->get_key_down('W'))
 	{
