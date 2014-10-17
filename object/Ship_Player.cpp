@@ -5,46 +5,16 @@ Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_M
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
-	axis_rotation = cos(0/2);
+	axis_rotation = D3DX_PI / 180;
+	//axis_rotation = cos(0 / 2);
 	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 }
 
 void Ship_Player::update(float timestep)
 {
-	/*
-	//Left for Right response
-	if(input_manage->get_key_down(VK_LEFT))
-	{
-		rotation.y -= ROTATION_SPEED * timestep;
-	}
-	if(input_manage->get_key_down(VK_RIGHT))
-	{
-		rotation.y += ROTATION_SPEED * timestep;
-	}
-	*/
-
-	//Create a new rotation based on mouse location
-	D3DXVECTOR3 mouse_vector;
-	mouse_vector.x = input_manage->get_mouse_x_centered();
-	mouse_vector.y = input_manage->get_mouse_y_centered();
-	mouse_vector.z = 1.0f;
-	mouse_vector = -mouse_vector;
-
-	if(mouse_vector.x > DEAD_ZONE || mouse_vector.x < -DEAD_ZONE)
-	{
-		if(mouse_vector.y > DEAD_ZONE || mouse_vector.y < -DEAD_ZONE)
-		{
-			D3DXQUATERNION mouse_point;
-			D3DXQUATERNION new_rotation;
-			D3DXQuaternionRotationAxis(&mouse_point, &mouse_vector, axis_rotation);
-			D3DXQuaternionNormalize(&mouse_point, &mouse_point);
-			D3DXQuaternionNormalize(&rotation, &rotation);
-			mouse_point = mouse_point * rotation;
-			D3DXQuaternionSlerp(&new_rotation, &rotation, &mouse_point, 0.05f);
-
-			rotation = new_rotation;
-		}
-	}
+	//Create a vector based on mouse location
+	int mouse_x_location = input_manage->get_mouse_x_centered();
+	int mouse_y_location = input_manage->get_mouse_y_centered();
 
 	//Calculate which way is forward
 	D3DXVECTOR3 forward = {0, 0, 1.0f};
@@ -53,6 +23,30 @@ void Ship_Player::update(float timestep)
 	D3DXVec3TransformCoord(&forward, &forward, &transform_forward);
 	forward = -forward;
 
+	//if not in dead_zone
+	/*
+	if(!((mouse_x_location >= -DEAD_ZONE && mouse_x_location <= 0) && (mouse_y_location >= -DEAD_ZONE && mouse_y_location <= 0)) && //4th quadrant exclusion zone
+	   !((mouse_x_location <= DEAD_ZONE && mouse_x_location >= 0) && (mouse_y_location <= DEAD_ZONE && mouse_y_location >= 0)) && //1st quadrant exclusion zone
+	   !((mouse_x_location <= DEAD_ZONE && mouse_x_location >= 0) && (mouse_y_location >= -DEAD_ZONE && mouse_y_location <= 0)) && //3rd quadrant exclusion zone
+	   !((mouse_x_location >= -DEAD_ZONE && mouse_x_location <= 0) && (mouse_y_location <= DEAD_ZONE && mouse_y_location >= 0)))//2nd quadrant exclusion zone
+	{
+	}
+	*/
+	//Rotate ship on x and y axis based on mouse location
+	float x_rotation_angle = mouse_x_location * timestep;
+	float y_rotation_angle = mouse_y_location * timestep;
+	D3DXMATRIX x_rotation;
+	D3DXMATRIX y_rotation;
+	D3DXVECTOR3 new_forward;
+	D3DXQUATERNION new_rotation;
+
+	D3DXMatrixRotationY(&x_rotation, x_rotation_angle);
+	D3DXMatrixRotationX(&y_rotation, y_rotation_angle);
+	D3DXMATRIX matrix_rotation = x_rotation * y_rotation;
+	//D3DXQuaternionRotationAxis(&new_rotation, &new_forward, 0);
+	D3DXQuaternionRotationMatrix(&new_rotation, &matrix_rotation);
+
+	rotation = new_rotation;
 
 	//Stop sound if buttons are not being pressed
 	if(engine_sound)
@@ -60,8 +54,8 @@ void Ship_Player::update(float timestep)
 		engine_sound->stop();
 	}
 
-	D3DXVECTOR3 temp_vector = vector_position;
 	//Add or subtract our new "forward" direction to our position
+	D3DXVECTOR3 temp_vector = vector_position;
 	if(input_manage->get_key_down('W'))
 	{
 		temp_vector -= forward * TRANSLATE_SPEED * timestep;
@@ -78,24 +72,6 @@ void Ship_Player::update(float timestep)
 			engine_sound->play();
 		}
 	}
-	//Rotate around the forward axis
-	if(input_manage->get_key_down('E'))
-	{
-		//none
-		if(engine_sound)
-		{
-			engine_sound->play();
-		}
-	}
-	if(input_manage->get_key_down('Q'))
-	{
-		//none
-		if(engine_sound)
-		{
-			engine_sound->play();
-		}
-	}
-
 	vector_position = temp_vector;
 
 	//Update location of hit_box

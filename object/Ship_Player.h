@@ -7,7 +7,7 @@
 
 #define ROTATION_SPEED  3.0f
 #define TRANSLATE_SPEED  20.0f
-#define DEAD_ZONE 15
+#define DEAD_ZONE 50
 
 class Ship_Player : public Object
 {

@@ -5,7 +5,7 @@ Use the mouse to rotate ship. Move forward and back with thw W and S keys.
 Known Bugs
 ---------------
 - Particle Spawners seem to stop emitting after spawning a certain number of particles
-- Mouse look is currently broken so navigation is very difficult
+- Mouse look generates some camera shake, the algorithim to calculate rotations is poorly designed
 - Enemy Follow is broken
 
 Changelog
