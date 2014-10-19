@@ -66,9 +66,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="object\Ship_Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="object\Ship_Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -95,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="engine\Collision_Sphere.h">
       <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="object\Missile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="object\Ship_Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="object\Ship_Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -166,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="engine\Collision_Sphere.cpp">
       <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="object\Missile.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

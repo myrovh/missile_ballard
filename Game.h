@@ -20,7 +20,7 @@
 #include "engine/Particle_Spawner.h"
 #include "engine/State_Machine.h"
 
-#include "object/Ship_Enemy.h"
+#include "object/Missile.h"
 #include "object/Ship_Player.h"
 
 enum Game_State

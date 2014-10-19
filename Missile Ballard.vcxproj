@@ -88,7 +88,7 @@
     <ClInclude Include="engine\WaveFile.h" />
     <ClInclude Include="engine\Window.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="object\Ship_Enemy.h" />
+    <ClInclude Include="object\Missile.h" />
     <ClInclude Include="object\Ship_Player.h" />
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +113,7 @@
     <ClCompile Include="engine\WaveFile.cpp" />
     <ClCompile Include="engine\Window.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="object\Ship_Enemy.cpp" />
+    <ClCompile Include="object\Missile.cpp" />
     <ClCompile Include="object\Ship_Player.cpp" />
   </ItemGroup>
   <ItemGroup>

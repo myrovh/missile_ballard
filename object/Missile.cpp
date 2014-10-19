@@ -1,6 +1,6 @@
-#include "Ship_Enemy.h"
+#include "Missile.h"
 
-Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object*	target)
+Missile::Missile(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object*	target)
 		 : Object(model, position, scale)
 {
 	this->move_speed = speed;
@@ -8,14 +8,14 @@ Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale, float spe
 	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 }
 
-Ship_Enemy::Ship_Enemy(Mesh* model, D3DXVECTOR3 position, float scale)
+Missile::Missile(Mesh* model, D3DXVECTOR3 position, float scale)
 		 : Object(model, position, scale)
 {
 	this->target = NULL;
 	move_speed = 0;
 }
 
-void Ship_Enemy::update(float timestep)
+void Missile::update(float timestep)
 {
 	if(target)
 	{
