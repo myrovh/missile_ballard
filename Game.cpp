@@ -156,8 +156,8 @@ bool Game::initialise_content()
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), 1.0f, 0.2f, object_queue[0])));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
-	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 0.2f)));
-	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 1.0f)));
+	object_queue.push_back((new Static_Object(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 1.0f, 1.0f)));
+	object_queue.push_back((new Static_Object(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 1.0f)));
 	//END Object Creation
 
 	test_factory->set_origin(object_queue[0]);

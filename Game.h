@@ -17,6 +17,7 @@
 #include "engine/Text.h"
 #include "engine/Button.h"
 #include "engine/Object.h"
+#include "engine/Static_Object.h"
 #include "engine/Particle_Spawner.h"
 #include "engine/State_Machine.h"
 

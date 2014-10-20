@@ -81,6 +81,7 @@
     <ClInclude Include="engine\Renderer.h" />
     <ClInclude Include="engine\Sound.h" />
     <ClInclude Include="engine\Sound_Manager.h" />
+    <ClInclude Include="engine\Static_Object.h" />
     <ClInclude Include="engine\Text.h" />
     <ClInclude Include="engine\Texture.h" />
     <ClInclude Include="engine\Texture_Manager.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="engine\Sound.cpp" />
     <ClCompile Include="engine\Sound_Manager.cpp" />
     <ClCompile Include="engine\State_Machine.h" />
+    <ClCompile Include="engine\Static_Object.cpp" />
     <ClCompile Include="engine\Text.cpp" />
     <ClCompile Include="engine\Texture.cpp" />
     <ClCompile Include="engine\Texture_Manager.cpp" />
