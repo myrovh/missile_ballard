@@ -23,6 +23,8 @@
 #include "object/Missile.h"
 #include "object/Ship_Player.h"
 
+#include "Missile_Factory.h"
+
 enum Game_State
 {
 	EMPTY,
@@ -46,6 +48,7 @@ private:
 	std::vector<Button*> button_queue;
 	std::vector<Particle_Spawner*> particle_queue;
 	unsigned long long frame_count;
+	Missile_Factory* test_factory;
 
 public:
 	Game();

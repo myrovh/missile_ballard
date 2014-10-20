@@ -1,12 +1,14 @@
 #include "Ship_Player.h"
 
-Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_Manager* input_manage, Sound* engine_sound)
+Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_Manager* input_manage, Sound* engine_sound, std::vector<Object*>* missile_queue, Missile_Factory* missile_spawner)
 		 : Object(model, position, scale)
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
+	this->missile_spawner = missile_spawner;
 	axis_rotation = cos(0 / 2);
 	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
+	this->missile_queue = missile_queue;
 }
 
 void Ship_Player::update(float timestep)
@@ -61,6 +63,11 @@ void Ship_Player::update(float timestep)
 		}
 	}
 	vector_position = temp_vector;
+	if(input_manage->get_key_up(VK_SPACE))
+	{
+		missile_queue->push_back(missile_spawner->spawn());
+		missile_queue->back()->set_visible();
+	}
 
 	//Update location of hit_box
 	hit_box->update_position(this->get_object_location());

@@ -145,14 +145,26 @@ bool Game::initialise_content()
 	sound_manage->load("sound/engine.wav");
 	//END Sound Loading
 
+	//START Factory Creation
+	test_factory = new Missile_Factory();
+	//END Factory Creation
+
 	//START Object Creation
-	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, input_manage, sound_manage->get_sound("sound/engine.wav"))));
+	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), 
+							D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 
+							input_manage, sound_manage->get_sound("sound/engine.wav"), &object_queue, test_factory)));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), 1.0f, 0.2f, object_queue[0])));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 0.2f)));
 	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 1.0f)));
 	//END Object Creation
+
+	test_factory->set_origin(object_queue[0]);
+	test_factory->set_target(object_queue[1]);
+	test_factory->add_mesh(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"));
+	test_factory->add_location(D3DXVECTOR3(1.0f, 0, 1.5f));
+	test_factory->add_location(D3DXVECTOR3(-1.0f, 0, 1.5f));
 
 	//START Camera Creation
 	camera = new Camera_Third(D3DXVECTOR3(0, 0, 10), object_queue[0], D3DXVECTOR3(0, 1, 0),
@@ -207,7 +219,6 @@ void Game::update(float timestamp)
 	input_manage->begin_update();
 
 	state_machine->update(timestamp);
-
 
 	input_manage->end_update();
 }
