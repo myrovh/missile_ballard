@@ -47,6 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\Boost\boost_1_56_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -82,6 +83,7 @@
     <ClInclude Include="engine\Sound.h" />
     <ClInclude Include="engine\Sound_Manager.h" />
     <ClInclude Include="engine\Static_Object.h" />
+    <ClInclude Include="engine\Super_Dumb_Script.h" />
     <ClInclude Include="engine\Text.h" />
     <ClInclude Include="engine\Texture.h" />
     <ClInclude Include="engine\Texture_Manager.h" />
@@ -110,6 +112,7 @@
     <ClCompile Include="engine\Sound_Manager.cpp" />
     <ClCompile Include="engine\State_Machine.h" />
     <ClCompile Include="engine\Static_Object.cpp" />
+    <ClCompile Include="engine\Super_Dumb_Script.cpp" />
     <ClCompile Include="engine\Text.cpp" />
     <ClCompile Include="engine\Texture.cpp" />
     <ClCompile Include="engine\Texture_Manager.cpp" />

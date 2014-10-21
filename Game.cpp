@@ -211,6 +211,10 @@ bool Game::initialise_content()
 		D3DCOLOR_ARGB(255, 255, 255, 255)));
 	// END Text box for mouse coordinates
 
+	test_loader.load_files();
+	variable_map* test_variables = test_loader.get_file("test.sdsc");
+
+
 	return TRUE;
 }
 

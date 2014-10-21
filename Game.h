@@ -20,6 +20,7 @@
 #include "engine/Static_Object.h"
 #include "engine/Particle_Spawner.h"
 #include "engine/State_Machine.h"
+#include "engine/Super_Dumb_Script.h"
 
 #include "object/Missile.h"
 #include "object/Ship_Player.h"
@@ -50,6 +51,7 @@ private:
 	std::vector<Particle_Spawner*> particle_queue;
 	unsigned long long frame_count;
 	Missile_Factory* test_factory;
+	Super_Dumb_Script test_loader;
 
 public:
 	Game();
