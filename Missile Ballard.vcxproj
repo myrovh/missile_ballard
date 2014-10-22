@@ -142,6 +142,7 @@
     <None Include="mesh\PlayerShip.x" />
     <None Include="mesh\Skybox.x" />
     <None Include="README" />
+    <None Include="script\mesh_list.sdsc" />
     <None Include="script\texture_list.sdsc" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,6 @@
+missile_mesh_1=STRING=mesh/EnemyShip-Blue.x
+missile_mesh_2=STRING=mesh/EnemyShip-Green.x
+missile_mesh_3=STRING=mesh/EnemyShip-Red.x
+laser_shot=STRING=mesh/LaserBlast.x
+ship=STRING=mesh/PlayerShip.x
+skybox=STRING=mesh/Skybox.x

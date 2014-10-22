@@ -116,48 +116,28 @@ bool Game::initialise_content()
 		{
 			std::string file_name;
 			file_name = boost::any_cast<std::string>(texture_iterator->second);
-			if(!texture_manage->load(renderer->get_device(), file_name.c_str()));
+			if(FAILED(texture_manage->load(renderer->get_device(), file_name)));
 			{
-				return FALSE;
+				//return FALSE;
 			}
 		}
 	}
-	/*
-	texture_manage->load(renderer->get_device(), "texture/Button.png");
-	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Blue.png");
-	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Green.png");
-	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Red.png");
-	texture_manage->load(renderer->get_device(), "texture/LaserBlast.png");
-	texture_manage->load(renderer->get_device(), "texture/PlayerShipTexture.png");
-	texture_manage->load(renderer->get_device(), "texture/skybox.png");
-	texture_manage->load(renderer->get_device(), "texture/point_particle.bmp");
-	*/
 	//END Texture Loading
 
 	//START Mesh Loading
-	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Blue.x"))
+	variable_map* mesh_list = file_manage.get_file("mesh_list.sdsc");
+	if(!mesh_list->empty())
 	{
-		return FALSE;
-	}
-	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Green.x"))
-	{
-		return FALSE;
-	}
-	if(!mesh_manage->load(renderer->get_device(), "mesh/EnemyShip-Red.x"))
-	{
-		return FALSE;
-	}
-	if(!mesh_manage->load(renderer->get_device(), "mesh/LaserBlast.x"))
-	{
-		return FALSE;
-	}
-	if(!mesh_manage->load(renderer->get_device(), "mesh/PlayerShip.x"))
-	{
-		return FALSE;
-	}
-	if(!mesh_manage->load(renderer->get_device(), "mesh/Skybox.x"))
-	{
-		return FALSE;
+		variable_map::iterator mesh_iterator;
+		for(mesh_iterator = mesh_list->begin(); mesh_iterator != mesh_list->end(); mesh_iterator++)
+		{
+			std::string file_name;
+			file_name = boost::any_cast<std::string>(mesh_iterator->second);
+			if(!mesh_manage->load(renderer->get_device(), file_name));
+			{
+				//return FALSE;
+			}
+		}
 	}
 	//END Mesh Loading
 

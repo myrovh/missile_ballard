@@ -7,6 +7,8 @@ Known Bugs
 - Particle Spawners seem to stop emitting after spawning a certain number of particles
 - Mouse look generates some camera shake, the algorithim to calculate rotations is poorly designed
 - Enemy Follow is broken
+- textures are assigning two references when they are attached to a mesh
+- validation checks on texture and mesh loading is entering the failure condition no matter what value is returned
 
 Changelog
 ---------------
