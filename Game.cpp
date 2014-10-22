@@ -116,7 +116,10 @@ bool Game::initialise_content()
 		{
 			std::string file_name;
 			file_name = boost::any_cast<std::string>(texture_iterator->second);
-			texture_manage->load(renderer->get_device(), file_name.c_str());
+			if(!texture_manage->load(renderer->get_device(), file_name.c_str()));
+			{
+				return FALSE;
+			}
 		}
 	}
 	/*
