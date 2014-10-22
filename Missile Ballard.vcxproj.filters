@@ -28,6 +28,9 @@
     <Filter Include="Resource Files\sound">
       <UniqueIdentifier>{5c6ed857-70e2-4458-9534-53db0336782e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\script">
+      <UniqueIdentifier>{c2d861f0-3467-4863-8146-1f53c84d266d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\Window.h">
@@ -208,7 +211,7 @@
     <Image Include="texture\skybox.png">
       <Filter>Resource Files\texture</Filter>
     </Image>
-    <Image Include="texture\point_particle.bmp">
+    <Image Include="texture\pointparticle.bmp">
       <Filter>Resource Files\texture</Filter>
     </Image>
   </ItemGroup>
@@ -236,6 +239,9 @@
     </None>
     <None Include=".gitignore">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="script\texture_list.sdsc">
+      <Filter>Resource Files\script</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

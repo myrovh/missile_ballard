@@ -58,6 +58,7 @@ Game::~Game()
 	Order of Instantiation is:
 	State_Machine
 	Input_Manager
+	File_Manager should be loaded here
 	Renderer
 	Sound_Manager
 	Texture_Manager
@@ -102,8 +103,23 @@ bool Game::initialise(HWND window_handler, bool fullscreen, Input_Manager* input
 bool Game::initialise_content()
 {
 	frame_count = 0;
+	//START Load script files
+	file_manage.load_files();
+	//END Load script files
 
 	//START Texture Loading
+	variable_map* texture_list = file_manage.get_file("texture_list.sdsc");
+	if(!texture_list->empty())
+	{
+		variable_map::iterator texture_iterator;
+		for(texture_iterator = texture_list->begin(); texture_iterator != texture_list->end(); texture_iterator++)
+		{
+			std::string file_name;
+			file_name = boost::any_cast<std::string>(texture_iterator->second);
+			texture_manage->load(renderer->get_device(), file_name.c_str());
+		}
+	}
+	/*
 	texture_manage->load(renderer->get_device(), "texture/Button.png");
 	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Blue.png");
 	texture_manage->load(renderer->get_device(), "texture/EnemyShipTexture-Green.png");
@@ -112,6 +128,7 @@ bool Game::initialise_content()
 	texture_manage->load(renderer->get_device(), "texture/PlayerShipTexture.png");
 	texture_manage->load(renderer->get_device(), "texture/skybox.png");
 	texture_manage->load(renderer->get_device(), "texture/point_particle.bmp");
+	*/
 	//END Texture Loading
 
 	//START Mesh Loading
@@ -174,7 +191,7 @@ bool Game::initialise_content()
 	//START Particle Spawner Creation
 	particle_queue.push_back(new Particle_Spawner);
 	particle_queue[0]->set_position(D3DXVECTOR3(0.0f, 10.0f, 0));
-	particle_queue[0]->set_particle_texture(texture_manage->get_texture("texture/point_particle.bmp"));
+	particle_queue[0]->set_particle_texture(texture_manage->get_texture("texture/pointparticle.bmp"));
 	particle_queue[0]->set_max_particles(1000);
 	particle_queue[0]->set_number_to_release(5);
 	particle_queue[0]->set_release_interval(0.05f);
@@ -211,8 +228,6 @@ bool Game::initialise_content()
 		D3DCOLOR_ARGB(255, 255, 255, 255)));
 	// END Text box for mouse coordinates
 
-	test_loader.load_files();
-	variable_map* test_variables = test_loader.get_file("test.sdsc");
 
 
 	return TRUE;

@@ -43,6 +43,7 @@ private:
 	Texture_Manager* texture_manage;
 	Mesh_Manager* mesh_manage;
 	Sound_Manager* sound_manage;
+	Super_Dumb_Script file_manage; //should maybe be made into pointer
 	Camera* camera;
 	State_Machine<Game_State, Game>* state_machine;
 	std::vector<Object*> object_queue;
@@ -51,7 +52,6 @@ private:
 	std::vector<Particle_Spawner*> particle_queue;
 	unsigned long long frame_count;
 	Missile_Factory* test_factory;
-	Super_Dumb_Script test_loader;
 
 public:
 	Game();

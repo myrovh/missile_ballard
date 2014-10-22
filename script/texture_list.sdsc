@@ -1,0 +1,8 @@
+missile_texture_1=STRING=texture/EnemyShipTexture-Blue.png
+missile_texture_3=STRING=texture/EnemyShipTexture-Red.png
+missile_texture_2=STRING=texture/EnemyShipTexture-Green.png
+button_texture=STRING=texture/Button.png
+laser_texture=STRING=texture/LaserBlast.png
+ship_texture=STRING=texture/PlayerShipTexture.png
+skybox_texture=STRING=texture/skybox.png
+point_particle=STRING=texture/pointparticle.bmp

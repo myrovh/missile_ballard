@@ -11,7 +11,7 @@ Material enemyColour {
 	 0.000000;
 	 0.000000; 0.000000; 0.000000;;
 	 0.000000; 0.000000; 0.000000;;
-	TextureFileName {"texture/EnemyShipTexture-blue.png";}
+	TextureFileName {"texture/EnemyShipTexture-Blue.png";}
 }
 Frame polySurface4 {
 	FrameTransformMatrix {

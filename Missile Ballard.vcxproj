@@ -130,7 +130,7 @@
     <Image Include="texture\EnemyShipTexture-Red.png" />
     <Image Include="texture\LaserBlast.png" />
     <Image Include="texture\PlayerShipTexture.png" />
-    <Image Include="texture\point_particle.bmp" />
+    <Image Include="texture\pointparticle.bmp" />
     <Image Include="texture\skybox.png" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +142,7 @@
     <None Include="mesh\PlayerShip.x" />
     <None Include="mesh\Skybox.x" />
     <None Include="README" />
+    <None Include="script\texture_list.sdsc" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\engine.wav" />
