@@ -246,6 +246,9 @@
     <None Include="script\mesh_list.sdsc">
       <Filter>Resource Files\script</Filter>
     </None>
+    <None Include="script\sound_list.sdsc">
+      <Filter>Resource Files\script</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\engine.wav">

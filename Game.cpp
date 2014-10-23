@@ -142,7 +142,20 @@ bool Game::initialise_content()
 	//END Mesh Loading
 
 	//START Sound Loading
-	sound_manage->load("sound/engine.wav");
+	variable_map* sound_list = file_manage.get_file("sound_list.sdsc");
+	if(!sound_list->empty())
+	{
+		variable_map::iterator sound_iterator;
+		for(sound_iterator = sound_list->begin(); sound_iterator != sound_list->end(); sound_iterator++)
+		{
+			std::string file_name;
+			file_name = boost::any_cast<std::string>(sound_iterator->second);
+			if(!sound_manage->load(file_name))
+			{
+				//return FALSE;
+			}
+		}
+	}
 	//END Sound Loading
 
 	//START Factory Creation
