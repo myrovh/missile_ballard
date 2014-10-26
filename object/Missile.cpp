@@ -1,18 +1,16 @@
 #include "Missile.h"
 
-Missile::Missile(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object*	target)
-		 : Object(model, position, scale)
+Missile::Missile(Mesh* model, variable_map* constructor_settings, variable_map* variable_settings, D3DXVECTOR3 spawn_location, Object*	target)
+		 : Object(model, constructor_settings, variable_settings)
 {
-	this->move_speed = speed;
+	this->vector_position = spawn_location;
 	this->target = target;
-	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
+	reload_variables();
 }
 
-Missile::Missile(Mesh* model, D3DXVECTOR3 position, float scale)
-		 : Object(model, position, scale)
+void Missile::reload_variables()
 {
-	this->target = NULL;
-	move_speed = 0;
+	translation_speed = boost::any_cast<float>(variable_settings->at("translation_speed"));
 }
 
 void Missile::update(float timestep)

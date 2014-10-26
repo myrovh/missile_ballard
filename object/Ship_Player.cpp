@@ -1,14 +1,20 @@
 #include "Ship_Player.h"
 
-Ship_Player::Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, Input_Manager* input_manage, Sound* engine_sound, std::vector<Object*>* missile_queue, Missile_Factory* missile_spawner)
-		 : Object(model, position, scale)
+Ship_Player::Ship_Player(Mesh* model, variable_map* constructor_settings, variable_map* variable_settings,
+						 Input_Manager* input_manage, Sound* engine_sound, std::vector<Object*>* missile_queue, Missile_Factory* missile_spawner)
+		 : Object(model, constructor_settings, variable_settings)
 {
 	this->input_manage = input_manage;
 	this->engine_sound = engine_sound;
 	this->missile_spawner = missile_spawner;
-	axis_rotation = cos(0 / 2);
-	this->hit_box = new Collision_Sphere(D3DXVECTOR3(0, 0, 0), 3.0f);
 	this->missile_queue = missile_queue;
+	reload_variables();
+}
+
+void Ship_Player::reload_variables()
+{
+	rotation_speed = boost::any_cast<float>(variable_settings->at("rotation_speed"));
+	translation_speed = boost::any_cast<float>(variable_settings->at("translation_speed"));
 }
 
 void Ship_Player::update(float timestep)
@@ -48,7 +54,7 @@ void Ship_Player::update(float timestep)
 	D3DXVECTOR3 temp_vector = vector_position;
 	if(input_manage->get_key_down('W'))
 	{
-		temp_vector -= forward * TRANSLATE_SPEED * timestep;
+		temp_vector -= forward * translation_speed * timestep;
 		if(engine_sound)
 		{
 			engine_sound->play();
@@ -56,7 +62,7 @@ void Ship_Player::update(float timestep)
 	}
 	if(input_manage->get_key_down('S'))
 	{
-		temp_vector += forward * TRANSLATE_SPEED * timestep;
+		temp_vector += forward * translation_speed * timestep;
 		if(engine_sound)
 		{
 			engine_sound->play();

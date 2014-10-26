@@ -249,6 +249,27 @@
     <None Include="script\sound_list.sdsc">
       <Filter>Resource Files\script</Filter>
     </None>
+    <None Include="script\object_list.sdsc">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\player.sdsc">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\player.sdsv">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\skybox.sdsc">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\skybox.sdsv">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\missile_normal.sdsc">
+      <Filter>Resource Files\script</Filter>
+    </None>
+    <None Include="script\missile_normal.sdsv">
+      <Filter>Resource Files\script</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\engine.wav">

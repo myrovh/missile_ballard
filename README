@@ -9,6 +9,8 @@ Known Bugs
 - Missile Follow is broken
 - textures are assigning two references when they are attached to a mesh (mesh and sound objects also likely exhibit this behavior)
 - validation checks on texture, mesh and sound loading is entering the failure condition no matter what value is returned
+- including comments inside super dumb script files may cause that file to be skipped and not added into memory
+- script loading lacks any form of exception handeling for missing files or missing variables or invalid variables
 
 Changelog
 ---------------

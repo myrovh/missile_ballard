@@ -6,10 +6,6 @@
 #include "../engine/Collision_Sphere.h"
 #include "../Missile_factory.h"
 
-#define ROTATION_SPEED  3.0f
-#define TRANSLATE_SPEED  20.0f
-#define DEAD_ZONE 50
-
 class Ship_Player : public Object
 {
 private:
@@ -17,13 +13,16 @@ private:
 	Sound* engine_sound;
 	std::vector<Object*>* missile_queue;
 	Missile_Factory* missile_spawner;
+	float rotation_speed;
+	float translation_speed;
 
 public:
-	Ship_Player(Mesh* model, D3DXVECTOR3 position, float scale, 
+	Ship_Player(Mesh* model, variable_map* constructor_settings, variable_map* variable_settings,
 				Input_Manager* input_manage, Sound* engine_sound, 
 				std::vector<Object*>* missile_queue, Missile_Factory* missile_spawner);
 
 	void update(float timestep);
+	void reload_variables();
 };
 
 #endif

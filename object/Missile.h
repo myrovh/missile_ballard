@@ -6,14 +6,14 @@
 class Missile : public Object
 {
 private:
-	float move_speed;
+	float translation_speed;
 	Object* target;
 
 public:
-	Missile(Mesh* model, D3DXVECTOR3 position, float scale, float speed, Object* target);
-	Missile(Mesh* model, D3DXVECTOR3 position, float scale);
+	Missile(Mesh* model, variable_map* constructor_settings, variable_map* variable_settings, D3DXVECTOR3 spawn_location, Object* target);
 
 	void update(float timestep);
+	void reload_variables();
 };
 
 #endif

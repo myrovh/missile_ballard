@@ -104,7 +104,8 @@ bool Game::initialise_content()
 {
 	frame_count = 0;
 	//START Load script files
-	file_manage.load_files();
+	file_manage.load_constructor_files();
+	file_manage.load_variable_files();
 	//END Load script files
 
 	//START Texture Loading
@@ -163,24 +164,40 @@ bool Game::initialise_content()
 	//END Factory Creation
 
 	//START Object Creation
-	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh("mesh/PlayerShip.x"), 
-							D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1.0f, 
-							input_manage, sound_manage->get_sound("sound/engine.wav"), &object_queue, test_factory)));
-	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Blue.x"), D3DXVECTOR3(3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
-	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"), D3DXVECTOR3(0, 0, 0), 1.0f, 0.2f, object_queue[0])));
-	object_queue.push_back((new Missile(mesh_manage->get_mesh("mesh/EnemyShip-Green.x"), D3DXVECTOR3(-3.0f, 0, 0), 1.0f, 0.2f, object_queue[0])));
-	object_queue.push_back((new Static_Object(mesh_manage->get_mesh("mesh/LaserBlast.x"), D3DXVECTOR3(0, 1.0f, 0), 1.0f, 1.0f)));
-	object_queue.push_back((new Static_Object(mesh_manage->get_mesh("mesh/Skybox.x"), D3DXVECTOR3(0, 0, 0), 1.0f)));
+	variable_map* object_list = file_manage.get_file("object_list.sdsc");
+	if(!object_list->empty())
+	{
+		variable_map::iterator object_iterator;
+		for(object_iterator = object_list->begin(); object_iterator != object_list->end(); object_iterator++)
+		{
+			std::string construct_data = boost::any_cast<std::string>(object_iterator->first) + ".sdsc";
+			std::string variable_data = boost::any_cast<std::string>(object_iterator->first) + ".sdsv";
+			variable_map* constructor_settings = file_manage.get_file(construct_data);
+			variable_map* variable_settings = file_manage.get_file(variable_data);
+			Mesh* mesh_data = mesh_manage->get_mesh(boost::any_cast<std::string>(constructor_settings->at("mesh")));
+			//two get files here one sdsc and another sdsv based on the object_list name
+			//load file here
+			object_queue.push_back(new Static_Object(mesh_data, constructor_settings, variable_settings));
+		}
+	}
+
+	variable_map* player_constructor = file_manage.get_file("player.sdsc");
+	std::string player_mesh = boost::any_cast<std::string>(player_constructor->at("mesh"));
+	std::string player_engine_sound = boost::any_cast<std::string>(player_constructor->at("engine_sound"));
+	object_queue.push_back((new Ship_Player(mesh_manage->get_mesh(player_mesh),
+							file_manage.get_file("player.sdsc"), file_manage.get_file("player.sdsv"),
+							input_manage, sound_manage->get_sound(player_engine_sound), &object_queue, test_factory)));
 	//END Object Creation
 
-	test_factory->set_origin(object_queue[0]);
-	test_factory->set_target(object_queue[1]);
+	test_factory->set_origin(object_queue[1]);
+	test_factory->set_target(object_queue[0]);
+	test_factory->add_variable_pair(file_manage.get_file("missile_normal.sdsc"), file_manage.get_file("missile_normal.sdsv"));
 	test_factory->add_mesh(mesh_manage->get_mesh("mesh/EnemyShip-Red.x"));
 	test_factory->add_location(D3DXVECTOR3(1.0f, 0, 1.5f));
 	test_factory->add_location(D3DXVECTOR3(-1.0f, 0, 1.5f));
 
 	//START Camera Creation
-	camera = new Camera_Third(D3DXVECTOR3(0, 0, 10), object_queue[0], D3DXVECTOR3(0, 1, 0),
+	camera = new Camera_Third(D3DXVECTOR3(0, 0, 10), object_queue[1], D3DXVECTOR3(0, 1, 0),
 							  D3DX_PI / 2, 640 / (float)480, 0.1f, 200.0f);
 	//END Camera Creation
 
@@ -224,7 +241,8 @@ bool Game::initialise_content()
 		D3DCOLOR_ARGB(255, 255, 255, 255)));
 	// END Text box for mouse coordinates
 
-
+	//TODO create function to erase all .sdsc files from the file manager they are only required for init
+	//TODO object will need a clear_constructor function to set its .sdsc pointer to null and null checks on all calls to and sdc files
 
 	return TRUE;
 }
@@ -323,12 +341,14 @@ void Game::game_update(float timestep)
 	}
 
 	//Check for collision
+	/*
 	if(Collision::check_collision(object_queue[0]->get_hit_box(), object_queue[3]->get_hit_box()))
 	{
 		std::stringstream trace_output;
 		trace_output << "object hit at frame " << frame_count << "\n";
 		trace(trace_output.str().c_str());
 	}
+	*/
 
 	frame_count++;
 }

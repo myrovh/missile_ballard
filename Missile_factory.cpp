@@ -23,6 +23,12 @@ void Missile_Factory::add_mesh(Mesh* mesh)
 	meshes.push_back(mesh);
 }
 
+void Missile_Factory::add_variable_pair(variable_map* constructor_settings, variable_map* variable_settings)
+{
+	constructor_setting_queue.push_back(constructor_settings);
+	variable_setting_queue.push_back(variable_settings);
+}
+
 void Missile_Factory::add_location(D3DXVECTOR3 location)
 {
 	locations.push_back(location);
@@ -47,7 +53,7 @@ Missile* Missile_Factory::spawn()
 		{
 			current_spawn_mesh = 0;
 		}
-		temp = new Missile(meshes[current_spawn_mesh], spawn_point, 1.0f, 0.2f, target);
+		temp = new Missile(meshes[current_spawn_mesh], constructor_setting_queue[0], variable_setting_queue[0], spawn_point, target);
 	}
 	return temp;
 }

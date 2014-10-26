@@ -143,6 +143,13 @@
     <None Include="mesh\Skybox.x" />
     <None Include="README" />
     <None Include="script\mesh_list.sdsc" />
+    <None Include="script\missile_normal.sdsc" />
+    <None Include="script\missile_normal.sdsv" />
+    <None Include="script\object_list.sdsc" />
+    <None Include="script\player.sdsc" />
+    <None Include="script\player.sdsv" />
+    <None Include="script\skybox.sdsc" />
+    <None Include="script\skybox.sdsv" />
     <None Include="script\sound_list.sdsc" />
     <None Include="script\texture_list.sdsc" />
   </ItemGroup>
